@@ -20,12 +20,10 @@ services:
     ports:
       - "8765:8765"
     healthcheck:
-      test: ["CMD", "curl", "-sf", "-X", "POST", "http://localhost:8765/mcp",
-             "-H", "Content-Type: application/json",
-             "-H", "Accept: application/json, text/event-stream",
-             "-d", "{\"jsonrpc\":\"2.0\",\"method\":\"ping\",\"id\":1}"]
+      test: ["CMD", "python", "-c",
+             "import urllib.request, sys; r=urllib.request.urlopen('http://localhost:8765/mcp', data=b'{\"jsonrpc\":\"2.0\",\"method\":\"ping\",\"id\":1}', timeout=5); sys.exit(0 if r.status==200 else 1)"]
       interval: 30s
-      timeout: 10s
+      timeout: 15s
       retries: 3
       start_period: 120s
 
