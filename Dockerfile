@@ -1,5 +1,8 @@
 FROM python:3.12-slim
 
+# Install torch CPU-only first to avoid pulling 2GB+ of CUDA libraries
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+
 # Pre-install mcp-memory-service so container starts instantly
 RUN pip install --no-cache-dir mcp-memory-service
 
