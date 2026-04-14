@@ -34,7 +34,12 @@ pytest tests/
 ## Session Startup Checklist
 1. SSH into Synology: `ssh charles@synology`
 2. Check containers: `docker compose ps` from `/volume1/docker/brian-mcp/`
-3. Check tunnel is live: `curl https://brian.aldarondo.us/memory/health`
+3. Health check (LAN): `curl http://192-168-0-64.aldarondo.direct.quickconnect.to:8765/health`
+4. Health check (public, Phase 2+): `curl https://brian.aldarondo.us/memory/health`
+
+## Deployment Phases
+- **Phase 1 (current):** LAN only — `http://192-168-0-64.aldarondo.direct.quickconnect.to:8765`
+- **Phase 2:** Public — `https://brian.aldarondo.us/memory` via Cloudflare Tunnel (do after Phase 1 is validated)
 
 ## Testing Requirements (mandatory)
 - Every feature or bug fix must include unit tests covering the core logic
