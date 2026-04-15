@@ -5,8 +5,7 @@
 Validate MCP memory works end-to-end on LAN — store, retrieve, and tag memories from a Claude Code session.
 
 ## 🔄 In Progress
-- [ ] `[Human]` Add `http://192-168-0-64.aldarondo.direct.quickconnect.to:8765/mcp` as Remote MCP server in Claude Code settings
-- [ ] `[Code]` Test `add_memory` / `search_memory` / `delete_memory` with family tags (`user:charles`, `user:*`)
+<!-- nothing active right now —  move to Phase 2 when ready -->
 
 ## 🔲 Backlog
 
@@ -29,6 +28,8 @@ Validate MCP memory works end-to-end on LAN — store, retrieve, and tag memorie
 - 2026-04-14 `[Human]` Deployed stack to Synology — `brian-mcp-memory` running on port 8765
 - 2026-04-14 `[Code]` Confirmed MCP endpoint live: `http://192-168-0-64.aldarondo.direct.quickconnect.to:8765/mcp` returns 200
 - 2026-04-14 `[Code]` Dockerfile created with CPU-only torch (image built locally, ~2GB)
+- 2026-04-14 `[Human]` MCP server added to Claude Code — `brian-memory` connected
+- 2026-04-14 `[Code]` Full round-trip validated: store → search (semantic + tag filter) → delete — **Phase 1 complete**
 
 ## 🚫 Blocked
 <!-- log blockers here -->
