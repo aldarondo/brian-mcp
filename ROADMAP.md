@@ -10,9 +10,9 @@ Validate MCP memory works end-to-end on LAN — store, retrieve, and tag memorie
 ## 🔲 Backlog
 
 ### Phase 2 — Production Hardening
-- [ ] `[Human]` Generate GitHub PAT with `write:packages` scope
-- [ ] `[Code]` Push `ghcr.io/aldarondo/brian-mcp-memory:latest` to GHCR (eliminates 3-5min pip install on restart)
-- [ ] `[Code]` Update docker-compose.yml on NAS to pull from ghcr.io
+- [x] `[Human]` Generate GitHub PAT with `write:packages` scope
+- [x] `[Code]` Push `ghcr.io/aldarondo/brian-mcp-memory:latest` to GHCR (eliminates 3-5min pip install on restart)
+- [x] `[Code]` Update docker-compose.yml on NAS to pull from ghcr.io
 - [ ] `[Human]` Create Cloudflare Tunnel in dashboard for `brian.aldarondo.us/memory` → copy tunnel token
 - [ ] `[Human]` Add `TUNNEL_TOKEN` to `.env` on Synology, start tunnel: `docker compose --profile tunnel up -d`
 - [ ] `[Human]` Validate endpoint reachable externally: `curl https://brian.aldarondo.us/memory/health`
@@ -23,6 +23,10 @@ Validate MCP memory works end-to-end on LAN — store, retrieve, and tag memorie
 - [ ] `[Code]` Write unit tests for any helper utilities
 
 ## ✅ Completed
+- 2026-04-18 `[Human]` GitHub PAT (`write:packages`) provided — GHCR login on NAS
+- 2026-04-18 `[Code]` Fixed Dockerfile: CPU-only torch via single pip call with `--index-url pytorch cpu` — image 1.45GB (was 5.42GB with CUDA)
+- 2026-04-18 `[Code]` Pushed `ghcr.io/aldarondo/brian-mcp-memory:latest` to GHCR (digest: sha256:4022fd2f...)
+- 2026-04-18 `[Code]` Updated docker-compose.yml on NAS — container restarts in ~10s, no more 3-min pip install
 - 2026-04-14 `[Code]` Initial scaffold — docker-compose.yml, .env.example, cloudflared config, tests/
 - 2026-04-14 `[Code]` Game plan defined
 - 2026-04-14 `[Human]` Deployed stack to Synology — `brian-mcp-memory` running on port 8765
