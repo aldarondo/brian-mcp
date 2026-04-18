@@ -49,3 +49,7 @@ pytest tests/
 - Set `MCP_MEMORY_URL=http://localhost:8765` for integration tests
 
 @~/Documents/GitHub/CLAUDE.md
+
+## Git Rules
+- Never create pull requests. Push directly to main.
+- solo/auto-push OK
