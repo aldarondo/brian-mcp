@@ -2,15 +2,13 @@
 > Tag key: `[Code]` = Claude Code · `[Cowork]` = Claude Cowork · `[Human]` = Charles must act
 
 ## 🎯 Current Milestone
-Harden the public endpoint — add auth via Cloudflare Access, write integration tests, push ghcr.io image for fast restarts.
+Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-service updates; re-auth NAS if GitHub PAT expires.
 
 ## 🔄 In Progress
-<!-- nothing active — Phase 3 hardening complete -->
+<!-- nothing active -->
 
 ## 🔲 Backlog
-
-### Phase 3 — Hardening
-- [ ] `[Code]` Write unit tests for any helper utilities
+<!-- nothing pending -->
 
 ## ✅ Completed
 - 2026-04-14 `[Code]` Initial scaffold — docker-compose.yml, .env.example, cloudflared config, tests/
