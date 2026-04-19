@@ -2,10 +2,10 @@
 Integration tests for brian-mcp memory endpoint.
 All features require unit + integration tests before a task is marked complete.
 
-Run against the live public endpoint:
-    MCP_MEMORY_URL=https://brian.aldarondo.family/mcp pytest tests/integration/
+Run against the live public endpoint (requires Cloudflare Access service token):
+    CF_ACCESS_CLIENT_ID=<id> CF_ACCESS_CLIENT_SECRET=<secret> pytest tests/integration/
 
-Or against LAN:
+Or against LAN (no auth needed):
     MCP_MEMORY_URL=http://192-168-0-64.aldarondo.direct.quickconnect.to:8765/mcp pytest tests/integration/
 """
 
@@ -16,6 +16,8 @@ import urllib.request
 import urllib.error
 
 MCP_URL = os.getenv("MCP_MEMORY_URL", "https://brian.aldarondo.family/mcp")
+CF_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID", "")
+CF_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET", "")
 TIMEOUT = 30
 
 TEST_TAG = "test:integration"
@@ -33,14 +35,20 @@ def mcp_call(method: str, params: dict) -> dict:
         "params": {"name": method, "arguments": params},
     }).encode()
 
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json, text/event-stream",
+        "User-Agent": "brian-mcp-test/1.0",
+    }
+    if CF_CLIENT_ID:
+        headers["CF-Access-Client-Id"] = CF_CLIENT_ID
+    if CF_CLIENT_SECRET:
+        headers["CF-Access-Client-Secret"] = CF_CLIENT_SECRET
+
     req = urllib.request.Request(
         MCP_URL,
         data=payload,
-        headers={
-            "Content-Type": "application/json",
-            "Accept": "application/json, text/event-stream",
-            "User-Agent": "brian-mcp-test/1.0",
-        },
+        headers=headers,
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
@@ -95,13 +103,14 @@ class TestConnectivity:
         payload = json.dumps({
             "jsonrpc": "2.0", "method": "ping", "id": 1,
         }).encode()
-        req = urllib.request.Request(
-            MCP_URL, data=payload,
-            headers={"Content-Type": "application/json",
-                     "Accept": "application/json, text/event-stream",
-                     "User-Agent": "brian-mcp-test/1.0"},
-            method="POST",
-        )
+        headers = {"Content-Type": "application/json",
+                   "Accept": "application/json, text/event-stream",
+                   "User-Agent": "brian-mcp-test/1.0"}
+        if CF_CLIENT_ID:
+            headers["CF-Access-Client-Id"] = CF_CLIENT_ID
+        if CF_CLIENT_SECRET:
+            headers["CF-Access-Client-Secret"] = CF_CLIENT_SECRET
+        req = urllib.request.Request(MCP_URL, data=payload, headers=headers, method="POST")
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
             assert resp.status == 200
 

@@ -5,8 +5,7 @@
 Harden the public endpoint — add auth via Cloudflare Access, write integration tests, push ghcr.io image for fast restarts.
 
 ## 🔄 In Progress
-- [ ] `[Code]` Set up Cloudflare Access policy on `brian.aldarondo.family`
-- [ ] `[Code]` Write integration tests against live public endpoint
+<!-- nothing active — Phase 3 hardening complete -->
 
 ## 🔲 Backlog
 
@@ -28,6 +27,8 @@ Harden the public endpoint — add auth via Cloudflare Access, write integration
 - 2026-04-19 `[Code]` Ingress rule set via Cloudflare MCP — `brian.aldarondo.family` → `http://mcp-memory:8765`
 - 2026-04-19 `[Code]` Tunnel live — `https://brian.aldarondo.family/mcp` returns 200 — **Phase 2 complete**
 - 2026-04-19 `[Code]` MCP server URL updated in Claude Code to `https://brian.aldarondo.family/mcp`
+- 2026-04-19 `[Code]` Cloudflare Access enabled — OTP policy for 4 family members, service token for Claude Code
+- 2026-04-19 `[Code]` 8 integration tests passing against live authenticated endpoint — **Phase 3 complete**
 
 ## 🚫 Blocked
 <!-- log blockers here -->
