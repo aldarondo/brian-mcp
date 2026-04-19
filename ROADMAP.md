@@ -10,9 +10,6 @@ Harden the public endpoint — add auth via Cloudflare Access, write integration
 ## 🔲 Backlog
 
 ### Phase 3 — Hardening
-- [ ] `[Human]` Generate GitHub PAT with `write:packages` scope (for ghcr.io push)
-- [ ] `[Code]` Push `ghcr.io/aldarondo/brian-mcp-memory:latest` — eliminates 3-5min pip install on restart
-- [ ] `[Code]` Update docker-compose.yml on NAS to pull from ghcr.io
 - [ ] `[Code]` Write unit tests for any helper utilities
 
 ## ✅ Completed
@@ -29,6 +26,10 @@ Harden the public endpoint — add auth via Cloudflare Access, write integration
 - 2026-04-19 `[Code]` MCP server URL updated in Claude Code to `https://brian.aldarondo.family/mcp`
 - 2026-04-19 `[Code]` Cloudflare Access enabled — OTP policy for 4 family members, service token for Claude Code
 - 2026-04-19 `[Code]` 8 integration tests passing against live authenticated endpoint — **Phase 3 complete**
+- 2026-04-19 `[Human]` GitHub PAT with `write:packages` scope generated and stored in claude-synology/config.json
+- 2026-04-19 `[Code]` Built CPU-only torch Docker image (~2GB, no CUDA), pushed to ghcr.io/aldarondo/brian-mcp-memory:latest
+- 2026-04-19 `[Code]` Synology NAS authenticated to ghcr.io via /root/.docker/config.json, docker-compose.yml updated
+- 2026-04-19 `[Code]` NAS container recreated from ghcr.io image — starts healthy in ~60s vs 3-5min before, 8/8 integration tests passing
 
 ## 🚫 Blocked
 <!-- log blockers here -->

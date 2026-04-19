@@ -16,6 +16,7 @@ build/
 
 # ── Secrets & credentials (always ignore) ─────────
 .env
+.env.test
 .env.local
 .env.*.local
 *.pem
