@@ -35,11 +35,11 @@ pytest tests/
 1. SSH into Synology: `ssh charles@synology`
 2. Check containers: `docker compose ps` from `/volume1/docker/brian-mcp/`
 3. Health check (LAN): `curl http://192-168-0-64.aldarondo.direct.quickconnect.to:8765/health`
-4. Health check (public, Phase 2+): `curl https://brian.aldarondo.us/memory/health`
+4. Health check (public): `curl -X POST https://brian.aldarondo.family/mcp -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ping","id":1}'`
 
 ## Deployment Phases
-- **Phase 1 (current):** LAN only — `http://192-168-0-64.aldarondo.direct.quickconnect.to:8765`
-- **Phase 2:** Public — `https://brian.aldarondo.us/memory` via Cloudflare Tunnel (do after Phase 1 is validated)
+- **Phase 1 (complete):** LAN — `http://192-168-0-64.aldarondo.direct.quickconnect.to:8765`
+- **Phase 2 (current):** Public — `https://brian.aldarondo.family/mcp` via Cloudflare Tunnel ✅
 
 ## Testing Requirements (mandatory)
 - Every feature or bug fix must include unit tests covering the core logic

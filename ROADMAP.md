@@ -5,7 +5,7 @@
 Validate MCP memory works end-to-end on LAN — store, retrieve, and tag memories from a Claude Code session.
 
 ## 🔄 In Progress
-<!-- nothing active right now —  move to Phase 2 when ready -->
+<!-- Phase 2 complete — move to Phase 3 hardening when ready -->
 
 ## 🔲 Backlog
 
@@ -34,6 +34,9 @@ Validate MCP memory works end-to-end on LAN — store, retrieve, and tag memorie
 - 2026-04-14 `[Code]` Dockerfile created with CPU-only torch (image built locally, ~2GB)
 - 2026-04-14 `[Human]` MCP server added to Claude Code — `brian-memory` connected
 - 2026-04-14 `[Code]` Full round-trip validated: store → search (semantic + tag filter) → delete — **Phase 1 complete**
+- 2026-04-19 `[Human]` Cloudflare Tunnel created, DNS `brian.aldarondo.family` CNAME set
+- 2026-04-19 `[Code]` Ingress rule set via Cloudflare MCP — `brian.aldarondo.family` → `http://mcp-memory:8765`
+- 2026-04-19 `[Code]` Tunnel live — `https://brian.aldarondo.family/mcp` returns 200 — **Phase 2 complete**
 
 ## 🚫 Blocked
 <!-- log blockers here -->
