@@ -30,5 +30,5 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 - 2026-04-19 `[Code]` NAS container recreated from ghcr.io image — starts healthy in ~60s vs 3-5min before, 8/8 integration tests passing
 
 ## 🚫 Blocked
-- ❌ [docker-monitor:no-weekly-schedule] No GitHub Actions workflows found — add a workflow with a `schedule:` trigger for weekly dependency rebuilds — 2026-04-20 16:57 UTC
+- ❌ [docker-monitor:no-weekly-schedule] No GitHub Actions workflows found — add a workflow with a `schedule:` trigger for weekly dependency rebuilds — 2026-04-20 17:07 UTC
 <!-- log blockers here -->
