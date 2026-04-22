@@ -30,7 +30,7 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 - 2026-04-19 `[Code]` NAS container recreated from ghcr.io image — starts healthy in ~60s vs 3-5min before, 8/8 integration tests passing
 
 ## 🚫 Blocked
-- ❌ [docker-monitor:container-stopped] Container `brian-mcp-memory` is not running on the NAS — check `docker logs brian-mcp-memory` and restart — 2026-04-21 08:42 UTC
+
 - ❌ [docker-monitor:deploy-failed] GitHub Actions deploy failed (run #24690343046) — https://github.com/aldarondo/brian-mcp/actions/runs/24690343046 — 2026-04-21 08:00 UTC
 
 <!-- log blockers here -->
