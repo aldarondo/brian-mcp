@@ -15,6 +15,11 @@ services:
       - /volume1/docker/brian-mcp/backups:/data/backups
     ports:
       - "8765:8765"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
     healthcheck:
       test: ["CMD", "python", "-c",
              "import socket, sys; s=socket.socket(); s.settimeout(5); r=s.connect_ex(('127.0.0.1', 8765)); s.close(); sys.exit(0 if r==0 else 1)"]
@@ -30,6 +35,11 @@ services:
     command: tunnel --no-autoupdate run
     environment:
       TUNNEL_TOKEN: ${TUNNEL_TOKEN:-}
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
     depends_on:
       mcp-memory:
         condition: service_healthy
