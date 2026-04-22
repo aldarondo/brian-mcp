@@ -55,21 +55,23 @@ jobs:
       - name: Install cloudflared
         run: |
           curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o /tmp/cloudflared.deb
-          sudo dpkg -i /tmp/cloudflared.deb && sudo apt-get install -y sshpass
+          sudo dpkg -i /tmp/cloudflared.deb
+
+      - name: Load SSH deploy key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.NAS_SSH_PRIVATE_KEY }}
+
+      - name: Add NAS to known_hosts
+        run: echo "${{ secrets.NAS_SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
 
       - name: Deploy to NAS
         env:
-          NAS_PASS: ${{ secrets.NAS_SSH_PASSWORD }}
-          SSHPASS: ${{ secrets.NAS_SSH_PASSWORD }}
           CF_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
           CF_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
         run: |
-          # TODO: replace sshpass+password with SSH key auth (add NAS public key to
-          # GitHub Secrets as NAS_SSH_KNOWN_HOSTS and NAS_SSH_PRIVATE_KEY, then use
-          # webfactory/ssh-agent action + known_hosts for host key verification).
-          sshpass -e ssh \
-            -o StrictHostKeyChecking=accept-new \
+          ssh \
             -o "ProxyCommand=cloudflared access ssh --hostname nas-ssh.aldarondo.family --id $CF_CLIENT_ID --secret $CF_CLIENT_SECRET" \
             charles@nas-ssh.aldarondo.family \
-            "echo \"$NAS_PASS\" | sudo -S /usr/local/bin/docker compose -f /volume1/docker/brian-mcp/docker-compose.yml pull && \
-             echo \"$NAS_PASS\" | sudo -S /usr/local/bin/docker compose -f /volume1/docker/brian-mcp/docker-compose.yml up -d"
+            "sudo /usr/local/bin/docker compose -f /volume1/docker/brian-mcp/docker-compose.yml pull \
+             && sudo /usr/local/bin/docker compose -f /volume1/docker/brian-mcp/docker-compose.yml up -d"
