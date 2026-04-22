@@ -8,7 +8,9 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 <!-- nothing active -->
 
 ## 🔲 Backlog
-<!-- nothing pending -->
+
+- `[Human]` Investigate GitHub Actions deploy failure (run #24748318702). Start here: check the Actions run log at https://github.com/aldarondo/brian-mcp/actions/runs/24748318702 — suspected cause is `cloudflared access ssh` command syntax or `nas-ssh.aldarondo.family` Cloudflare Access app config. If SSH via tunnel works locally (`cloudflared access ssh --hostname nas-ssh.aldarondo.family`), the issue is CI-specific.
+- `[Human]` Replace SSH password auth in build.yml with SSH key auth: generate keypair, add public key to NAS `~/.ssh/authorized_keys`, add private key as `NAS_SSH_PRIVATE_KEY` GitHub Secret, replace `sshpass` with `webfactory/ssh-agent` action.
 
 ## ✅ Completed
 - 2026-04-14 `[Code]` Initial scaffold — docker-compose.yml, .env.example, cloudflared config, tests/
@@ -28,9 +30,8 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 - 2026-04-19 `[Code]` Built CPU-only torch Docker image (~2GB, no CUDA), pushed to ghcr.io/aldarondo/brian-mcp-memory:latest
 - 2026-04-19 `[Code]` Synology NAS authenticated to ghcr.io via /root/.docker/config.json, docker-compose.yml updated
 - 2026-04-19 `[Code]` NAS container recreated from ghcr.io image — starts healthy in ~60s vs 3-5min before, 8/8 integration tests passing
+- 2026-04-22 `[Code]` QA audit — 40 findings fixed: scrubbed credentials from .env.test, fixed pytest filename collision, wrote real unit tests (test_helpers.py), added error-case integration tests, fixed search() return type + hash extraction + configurable timeout, fixed docker-compose TUNNEL_TOKEN validation + healthcheck logging, improved pre-commit hook warnings, added CI test job to build.yml, fixed StrictHostKeyChecking, removed outdated Dockerfile comment, updated .env.example with CF Access instructions, overhauled README with deployment checklist + troubleshooting, fixed CLAUDE.md health check URL, deleted unused cloudflared/config.yml
+- 2026-04-22 `[Code]` Purged .env.test from git history using git filter-repo
 
 ## 🚫 Blocked
-
-- ❌ [docker-monitor:deploy-failed] GitHub Actions deploy failed (run #24748318702) — https://github.com/aldarondo/brian-mcp/actions/runs/24748318702 — 2026-04-22 08:00 UTC
-
 <!-- log blockers here -->

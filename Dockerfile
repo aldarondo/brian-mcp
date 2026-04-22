@@ -3,7 +3,6 @@ FROM python:3.12-slim
 # Install torch CPU-only + mcp-memory-service in one pip call.
 # --index-url forces torch to resolve from the CPU wheel index;
 # --extra-index-url supplies PyPI for everything else.
-# Two separate RUN layers let pip upgrade torch to CUDA on the second pass.
 RUN pip install --no-cache-dir \
     --index-url https://download.pytorch.org/whl/cpu \
     --extra-index-url https://pypi.org/simple/ \
