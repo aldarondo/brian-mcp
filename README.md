@@ -90,6 +90,19 @@ Add to your MCP config:
 ```
 
 ## Maintenance
+
+### Logs
+Both containers use the `json-file` driver with automatic rotation (5 × 10MB per service). Logs persist across container restarts and recreates — only `docker rm` clears them.
+
+```bash
+# Stream live logs
+docker logs -f brian-mcp-memory
+docker logs -f brian-mcp-tunnel
+
+# Last 100 lines
+docker logs --tail 100 brian-mcp-memory
+```
+
 - **Rebuild image:** when `mcp-memory-service` releases an update, rebuild and push `ghcr.io/aldarondo/brian-mcp-memory:latest`, then `docker compose pull && docker compose up -d` on the NAS.
 - **Re-auth NAS:** if the GitHub PAT expires, generate a new `write:packages` PAT and run `docker login ghcr.io` on the NAS.
 - **Cloudflare Access:** service token lives in `.env`; family OTP policy covers `charles.aldarondo@gmail.com` and the other family addresses configured in Cloudflare Zero Trust.
