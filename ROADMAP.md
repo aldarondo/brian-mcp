@@ -31,6 +31,6 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 
 ## 🚫 Blocked
 
-- ❌ [docker-monitor:deploy-failed] GitHub Actions deploy failed (run #24690343046) — https://github.com/aldarondo/brian-mcp/actions/runs/24690343046 — 2026-04-21 08:00 UTC
+- ❌ [docker-monitor:deploy-failed] GitHub Actions deploy failed (run #24748318702) — https://github.com/aldarondo/brian-mcp/actions/runs/24748318702 — 2026-04-22 08:00 UTC
 
 <!-- log blockers here -->
