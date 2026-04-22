@@ -36,8 +36,8 @@ pytest tests/
 ## Session Startup Checklist
 1. SSH into Synology: `ssh charles@synology`
 2. Check containers: `docker compose ps` from `/volume1/docker/brian-mcp/`
-3. Health check (LAN): `curl http://192-168-0-64.aldarondo.direct.quickconnect.to:8765/health`
-4. Health check (public): `curl -X POST https://brian.aldarondo.family/mcp -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ping","id":1}'`
+3. Health check (LAN): `curl -X POST http://192-168-0-64.aldarondo.direct.quickconnect.to:8765/mcp -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"ping","id":1}'`
+4. Health check (public): `curl -X POST https://brian.aldarondo.family/mcp -H "Content-Type: application/json" -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" -d '{"jsonrpc":"2.0","method":"ping","id":1}'`
 
 ## Deployment Phases
 - **Phase 1 (complete):** LAN — `http://192-168-0-64.aldarondo.direct.quickconnect.to:8765`

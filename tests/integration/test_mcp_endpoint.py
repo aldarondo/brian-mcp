@@ -18,7 +18,7 @@ import urllib.error
 MCP_URL = os.getenv("MCP_MEMORY_URL", "https://brian.aldarondo.family/mcp")
 CF_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID", "")
 CF_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET", "")
-TIMEOUT = 30
+TIMEOUT = int(os.getenv("MCP_TEST_TIMEOUT", "30"))
 
 TEST_TAG = "test:integration"
 CONVERSATION_ID = "test-integration-run"
@@ -74,19 +74,19 @@ def store(content: str, tags: str) -> str:
     assert "hash:" in text.lower() or "stored" in text.lower(), f"Unexpected store response: {text}"
     # Extract hash from "Memory stored successfully (hash: abc123...)"
     for part in text.split():
-        if len(part) >= 32 and all(c in "0123456789abcdef)" for c in part.rstrip(")")):
-            return part.rstrip(")")
+        cleaned = part.rstrip(")")
+        if len(cleaned) >= 32 and all(c in "0123456789abcdef" for c in cleaned):
+            return cleaned
     pytest.fail(f"Could not extract hash from: {text}")
 
 
-def search(query: str, tags: list[str] | None = None, limit: int = 10) -> list[dict]:
-    """Search memories and return list of result dicts."""
+def search(query: str, tags: list[str] | None = None, limit: int = 10) -> str:
+    """Search memories and return raw response text for assertion."""
     params = {"query": query, "limit": limit}
     if tags:
         params["tags"] = tags
     result = mcp_call("memory_search", params)
-    text = result["result"]["content"][0]["text"]
-    return text  # Return raw text for assertion
+    return result["result"]["content"][0]["text"]
 
 
 def delete(content_hash: str) -> str:
