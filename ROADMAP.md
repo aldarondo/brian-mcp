@@ -34,5 +34,5 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 - 2026-04-22 `[Code]` Purged .env.test from git history using git filter-repo
 
 ## 🚫 Blocked
-- ❌ [docker-monitor:container-stopped] Container `brian-mcp-memory` is not running on the NAS — check `docker logs brian-mcp-memory` and restart — 2026-04-23 08:42 UTC
+
 <!-- log blockers here -->
