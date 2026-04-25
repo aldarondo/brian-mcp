@@ -13,6 +13,8 @@ services:
     volumes:
       - /volume1/docker/brian-mcp/memory:/data/memory
       - /volume1/docker/brian-mcp/backups:/data/backups
+      - /volume1/docker/brian-mcp/logs:/app/logs
+    command: sh -c "python -m mcp_memory_service.server 2>&1 | tee -a /app/logs/app.log"
     ports:
       - "8765:8765"
     logging:
