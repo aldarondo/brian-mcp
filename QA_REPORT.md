@@ -16,8 +16,8 @@ Docker-based MCP memory server on Synology NAS, exposed via Cloudflare Tunnel. P
 - **Location:** `.env.test` (lines 5-7)
 - **Issue:** Live Cloudflare Access credentials committed to git:
   ```
-  CF_ACCESS_CLIENT_ID=REDACTED_CF_CLIENT_ID
-  CF_ACCESS_CLIENT_SECRET=REDACTED_CF_CLIENT_SECRET
+  CF_ACCESS_CLIENT_ID=<redacted — rotate in Cloudflare Zero Trust>
+  CF_ACCESS_CLIENT_SECRET=<redacted — rotate in Cloudflare Zero Trust>
   ```
 - **Rating:** Critical
 - **Fix:** Revoke these tokens immediately in Cloudflare Zero Trust, regenerate with new values in a local-only `.env.test`, and use `git filter-repo` to purge from history.
