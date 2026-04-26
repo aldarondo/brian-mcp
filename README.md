@@ -131,6 +131,26 @@ docker logs -f brian-mcp-tunnel
 docker logs --tail 100 brian-mcp-memory
 ```
 
+### Backups
+
+The ChromaDB store lives at `/volume1/docker/brian-mcp/memory` (host bind mount); container recreation does not touch it. Snapshots and an append-only `backup.log` go to `/volume1/docker/brian-mcp/backups/`.
+
+**Daily snapshot (`scripts/backup.sh`):** stops `mcp-memory`, tars `memory/` into `backups/memory-YYYY-MM-DD.tar.gz`, restarts the container, then prunes old snapshots — keeping the last 7 daily plus the newest snapshot in each of the 4 most recent weeks beyond that. Container downtime is ~5 seconds.
+
+Schedule it via Synology **Control Panel → Task Scheduler → Create → Scheduled Task → User-defined script**:
+- **General:** user `root`, name `brian-mcp daily backup`
+- **Schedule:** Daily, 03:00
+- **Run command:** `/volume1/docker/brian-mcp/scripts/backup.sh`
+
+**Restore (`scripts/restore.sh`):**
+```bash
+ssh charles@synology
+cd /volume1/docker/brian-mcp
+sudo ./scripts/restore.sh /volume1/docker/brian-mcp/backups/memory-2026-04-25.tar.gz
+```
+Existing data is moved to `memory.before-restore-<timestamp>` rather than deleted, so you can roll back if the restore looks wrong.
+
+### Other maintenance
 - **Rebuild image:** when `mcp-memory-service` releases an update, GitHub Actions builds and pushes a new image automatically on Sunday at 03:00 UTC. Then `docker compose pull && docker compose up -d` on the NAS.
 - **Re-auth NAS:** if the GitHub PAT expires, generate a new `write:packages` PAT and run `docker login ghcr.io` on the NAS.
 - **Cloudflare Access:** service token lives in `.env`; family OTP policy covers `charles.aldarondo@gmail.com` and the other family addresses configured in Cloudflare Zero Trust.
