@@ -11,8 +11,9 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 
 - `[Human]` Investigate GitHub Actions deploy failure (run #24748318702). Start here: check the Actions run log at https://github.com/aldarondo/brian-mcp/actions/runs/24748318702 — suspected cause is `cloudflared access ssh` command syntax or `nas-ssh.aldarondo.family` Cloudflare Access app config. If SSH via tunnel works locally (`cloudflared access ssh --hostname nas-ssh.aldarondo.family`), the issue is CI-specific.
 - `[Human]` Replace SSH password auth in build.yml with SSH key auth: generate keypair, add public key to NAS `~/.ssh/authorized_keys`, add private key as `NAS_SSH_PRIVATE_KEY` GitHub Secret, replace `sshpass` with `webfactory/ssh-agent` action.
+- `[Human]` Schedule the daily backup on the Synology — Control Panel → Task Scheduler → Create → Scheduled Task → User-defined script. User: `root`. Schedule: daily 03:00. Command: `/volume1/docker/brian-mcp/scripts/backup.sh`. Verify by tailing `/volume1/docker/brian-mcp/backups/backup.log` after the first run.
 - `[Code]` Off-site backup via brian-drive — once the brian-drive project ships, wire it up as the off-site destination for `/volume1/docker/brian-mcp/backups/*.tar.gz`. Goal: weekly upload of the latest snapshot to Google Drive, with retention (e.g., 4 weekly + 6 monthly). Blocked on brian-drive being production-ready.
-- `[Human]` Restore drill — quarterly test that the latest backup tarball actually rehydrates into a working container. Steps: pull latest snapshot, extract to a scratch dir, point a throwaway `mcp-memory` container at it, run `tests/integration/` against it, confirm memory count and a known-good search match. Document the procedure in README under Maintenance and log each drill date here.
+- `[Human]` Restore drill — quarterly test that the latest backup tarball actually rehydrates into a working container, using `scripts/restore.sh <tarball>` against a scratch directory. Run `tests/integration/` against it, confirm memory count and a known-good search match. Log each drill date here.
 
 ## ✅ Completed
 - 2026-04-14 `[Code]` Initial scaffold — docker-compose.yml, .env.example, cloudflared config, tests/
@@ -34,6 +35,7 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 - 2026-04-19 `[Code]` NAS container recreated from ghcr.io image — starts healthy in ~60s vs 3-5min before, 8/8 integration tests passing
 - 2026-04-22 `[Code]` QA audit — 40 findings fixed: scrubbed credentials from .env.test, fixed pytest filename collision, wrote real unit tests (test_helpers.py), added error-case integration tests, fixed search() return type + hash extraction + configurable timeout, fixed docker-compose TUNNEL_TOKEN validation + healthcheck logging, improved pre-commit hook warnings, added CI test job to build.yml, fixed StrictHostKeyChecking, removed outdated Dockerfile comment, updated .env.example with CF Access instructions, overhauled README with deployment checklist + troubleshooting, fixed CLAUDE.md health check URL, deleted unused cloudflared/config.yml
 - 2026-04-22 `[Code]` Purged .env.test from git history using git filter-repo
+- 2026-04-26 `[Code]` Local daily backup tooling — `scripts/backup.sh` (stop → tar → start with EXIT trap), `scripts/prune_backups.py` (7 daily + 4 weekly retention), `scripts/restore.sh` (archives existing memory dir before extract), 16 unit tests for prune logic. Synology Task Scheduler entry pending [Human] to schedule it overnight.
 
 ## 🚫 Blocked
 
