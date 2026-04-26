@@ -11,6 +11,8 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 
 - `[Human]` Investigate GitHub Actions deploy failure (run #24748318702). Start here: check the Actions run log at https://github.com/aldarondo/brian-mcp/actions/runs/24748318702 — suspected cause is `cloudflared access ssh` command syntax or `nas-ssh.aldarondo.family` Cloudflare Access app config. If SSH via tunnel works locally (`cloudflared access ssh --hostname nas-ssh.aldarondo.family`), the issue is CI-specific.
 - `[Human]` Replace SSH password auth in build.yml with SSH key auth: generate keypair, add public key to NAS `~/.ssh/authorized_keys`, add private key as `NAS_SSH_PRIVATE_KEY` GitHub Secret, replace `sshpass` with `webfactory/ssh-agent` action.
+- `[Code]` Off-site backup via brian-drive — once the brian-drive project ships, wire it up as the off-site destination for `/volume1/docker/brian-mcp/backups/*.tar.gz`. Goal: weekly upload of the latest snapshot to Google Drive, with retention (e.g., 4 weekly + 6 monthly). Blocked on brian-drive being production-ready.
+- `[Human]` Restore drill — quarterly test that the latest backup tarball actually rehydrates into a working container. Steps: pull latest snapshot, extract to a scratch dir, point a throwaway `mcp-memory` container at it, run `tests/integration/` against it, confirm memory count and a known-good search match. Document the procedure in README under Maintenance and log each drill date here.
 
 ## ✅ Completed
 - 2026-04-14 `[Code]` Initial scaffold — docker-compose.yml, .env.example, cloudflared config, tests/
