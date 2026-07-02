@@ -41,6 +41,5 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 - 2026-04-26 `[Code]` Local daily backup tooling — `scripts/backup.sh` (stop → tar → start with EXIT trap), `scripts/prune_backups.py` (7 daily + 4 weekly retention), `scripts/restore.sh` (archives existing memory dir before extract), 16 unit tests for prune logic. Synology Task Scheduler entry pending [Human] to schedule it overnight.
 
 ## 🚫 Blocked
-- ❌ [docker-monitor:container-stopped] Container `brian-mcp-memory` is not running on the NAS — check `docker logs brian-mcp-memory` and restart — 2026-07-01 08:00 UTC
 
 <!-- log blockers here -->
