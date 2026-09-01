@@ -41,6 +41,5 @@ Project complete — maintenance mode. Rebuild ghcr.io image on mcp-memory-servi
 - 2026-04-26 `[Code]` Local daily backup tooling — `scripts/backup.sh` (stop → tar → start with EXIT trap), `scripts/prune_backups.py` (7 daily + 4 weekly retention), `scripts/restore.sh` (archives existing memory dir before extract), 16 unit tests for prune logic. Synology Task Scheduler entry pending [Human] to schedule it overnight.
 
 ## 🚫 Blocked
-- ❌ [docker-monitor:deploy-failed] GitHub Actions deploy failed (run #33303274310) — https://github.com/aldarondo/brian-mcp/actions/runs/33303274310 — 2026-08-31 08:00 UTC
 
 <!-- log blockers here -->
